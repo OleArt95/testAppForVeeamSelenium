@@ -1,5 +1,6 @@
 package com.veeam;
 
+import com.veeam.configuration.Constants;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -8,10 +9,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class seleniumTest {
 
-    @ParameterizedTest()
-    @CsvFileSource(resources = Constants.VEEAM_JOBS_COUNTRIES_CSV_PATH, numLinesToSkip = 1)
+    @ParameterizedTest(name = "Veeam vacancies (country = {0}, amount of jobs = {2})")
+    @CsvFileSource(resources = Constants.VEEAM_JOBS_IN_COUNTRIES_CSV_PATH, numLinesToSkip = 1)
     void veeamSeleniumTest(String country, String languageBtn, String jobsFound) throws InterruptedException {
-        System.setProperty(Constants.WEBDRIVER_CHROME_DRIVER, Constants.CHROMEDRIVER_PATH);
+        System.setProperty(Constants.WEB_DRIVER_CHROME_DRIVER, Constants.CHROME_DRIVER_PATH);
 
         ChromeDriver driver = new ChromeDriver();
 
@@ -22,13 +23,13 @@ public class seleniumTest {
         WebElement listAllCountries = driver.findElementByCssSelector("[id=\"country-element\"]");
         listAllCountries.click();
 
-        WebElement buttonCountry = driver.findElementByCssSelector("[data-value="+ country +"]");
+        WebElement buttonCountry = driver.findElementByCssSelector("[data-value=" + country + "]");
         buttonCountry.click();
 
         WebElement listAllLanguages = driver.findElementByCssSelector("[id=\"language\"]");
         listAllLanguages.click();
 
-        WebElement buttonLanguage = driver.findElementByCssSelector("[for="+ languageBtn +"]");
+        WebElement buttonLanguage = driver.findElementByCssSelector("[for=" + languageBtn + "]");
         buttonLanguage.click();
         Thread.sleep(1000L);
 
